@@ -1,0 +1,13 @@
+/**:
+  ros__parameters:
+    model_name: "skeleton"
+    reference_frame: "world"
+    userCalibrationPreparationTimeMs: 5000 # Time in milliseconds to prepare for calibration (e.g., time to get into pose)
+    awindaChannel: 15
+    settingsPath: "$(find-pkg-share xsens_xme_sdk)"
+    # userPath also indicates the default path to look for calibration files on initialization
+    userPath: "$(find-pkg-share xsens_xme_sdk)"
+    logPath: "$(env HOME)/.ros/log"
+    sampleRate: 240.0
+    suitConfiguration: "FullBody"
+    biomechanicalModel: "Legacy" # Legacy, Female or Male

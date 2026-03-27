@@ -1,0 +1,20 @@
+# Subject-specific body dimension overrides.
+# These values override the defaults from body_dimensions_parameters.yaml.
+# Adjust to match the subject wearing the suit.
+# Defaults (in parentheses): bodyHeight(1.80), footSize(0.26),
+# shoulderHeight(1.45), armSpan(1.80), hipHeight(0.87), kneeHeight(0.49).
+/**:
+  ros__parameters:
+    bodyDimension: # In meters
+      bodyHeight: 1.85
+      footSize: 0.31
+      shoulderHeight: 1.4434
+      shoulderWidth: 0.38
+      elbowSpan: 0.94
+      wristSpan: 1.43
+      armSpan: 1.796
+      hipHeight: 0.8744
+      hipWidth: 0.24
+      kneeHeight: 0.4861
+      ankleHeight: 0.08
+      shoeSoleHeight: 0.0

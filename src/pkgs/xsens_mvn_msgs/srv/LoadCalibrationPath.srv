@@ -1,0 +1,6 @@
+# Request
+string calibration_file_path
+---
+# Response
+string message
+bool success

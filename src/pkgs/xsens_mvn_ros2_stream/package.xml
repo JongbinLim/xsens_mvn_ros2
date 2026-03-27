@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+
+    <name>xsens_mvn_ros2_stream</name>
+    <version>0.0.1</version>
+
+    <description>Xsens MVN ROS2 node for UDP streaming from MVN Studio</description>
+
+    <maintainer email="support@xsens.com">Xsens</maintainer>
+    <license>BSD-3-Clause</license>
+
+    <buildtool_depend>ament_cmake</buildtool_depend>
+
+    <build_depend>eigen</build_depend>
+    <build_depend>libboost-chrono-dev</build_depend>
+    <build_depend>libboost-thread-dev</build_depend>
+    <depend>generate_parameter_library</depend>
+    <depend>diagnostic_msgs</depend>
+    <depend>diagnostic_updater</depend>
+    <depend>geometry_msgs</depend>
+    <depend>rclcpp</depend>
+    <depend>rclcpp_lifecycle</depend>
+    <depend>tf2_geometry_msgs</depend>
+    <depend>tf2_ros</depend>
+    <depend>xsens_mvn_msgs</depend>
+    <depend>xsens_mvn_ros2_common</depend>
+    <depend>xsens_mvn_sdk</depend>
+
+    <test_depend>ament_lint_auto</test_depend>
+    <test_depend>ament_lint_common</test_depend>
+    <test_depend>ament_cmake_gtest</test_depend>
+
+    <export>
+        <build_type>ament_cmake</build_type>
+    </export>
+
+</package>

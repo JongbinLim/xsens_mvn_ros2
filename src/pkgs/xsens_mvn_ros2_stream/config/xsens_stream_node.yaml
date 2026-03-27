@@ -1,0 +1,6 @@
+xsens_mvn_ros2_stream_node:
+  ros__parameters:
+    model_name: "skeleton"
+    reference_frame: "world"
+    udp_port: 9763
+    update_frequency: 100

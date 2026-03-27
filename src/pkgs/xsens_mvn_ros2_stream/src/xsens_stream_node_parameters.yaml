@@ -1,0 +1,21 @@
+xsens_stream_node:
+  model_name:
+    type: string
+    default_value: "skeleton"
+    description: "Prefix for TF frame names (e.g. 'skeleton' -> 'skeleton_pelvis')"
+  reference_frame:
+    type: string
+    default_value: "world"
+    description: "Root TF frame name"
+  udp_port:
+    type: int
+    default_value: 9763
+    description: "UDP port to listen on for MVN Studio data"
+    validation:
+      bounds<>: [1024, 65535]
+  update_frequency:
+    type: int
+    default_value: 100
+    description: "Publish rate in Hz"
+    validation:
+      bounds<>: [1, 500]

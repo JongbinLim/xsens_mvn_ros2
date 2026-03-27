@@ -1,0 +1,11 @@
+<launch>
+    <arg name="model_name" default="skeleton"/>
+
+    <node name="xsens_urdf_publisher"
+          pkg="xsens_mvn_ros2_description"
+          exec="xsens_mvn_ros2_urdf_publisher_node"
+          output="screen">
+        <param name="model_name" value="$(var model_name)"/>
+        <param from="$(find-pkg-share xsens_mvn_ros2_description)/config/xsens_urdf_publisher_node.yaml" allow_substs="true"/>
+    </node>
+</launch>

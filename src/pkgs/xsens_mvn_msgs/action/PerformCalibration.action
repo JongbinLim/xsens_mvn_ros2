@@ -1,0 +1,13 @@
+
+# Request
+int8 NPOSE = 0
+int8 TPOSE = 1
+
+int8 pose 0
+string output_file_name # must include .mvn extension
+---
+# Result
+string calibration_result
+---
+# Feedback
+string status

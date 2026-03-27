@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+
+    <name>xsens_mvn_ros2</name>
+    <version>0.0.1</version>
+
+    <description>Meta-package: installs all Xsens MVN ROS2 sub-packages.</description>
+
+    <maintainer email="support@xsens.com">Xsens</maintainer>
+    <license>BSD-3-Clause</license>
+
+    <buildtool_depend>ament_cmake</buildtool_depend>
+
+    <exec_depend>xsens_mvn_ros2_common</exec_depend>
+    <exec_depend>xsens_mvn_ros2_stream</exec_depend>
+    <exec_depend>xsens_mvn_ros2_xme</exec_depend>
+    <exec_depend>xsens_mvn_ros2_description</exec_depend>
+
+    <export>
+        <build_type>ament_cmake</build_type>
+    </export>
+
+</package>

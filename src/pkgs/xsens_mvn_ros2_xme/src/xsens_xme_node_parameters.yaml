@@ -1,0 +1,51 @@
+xsens_xme_node:
+  model_name:
+    type: string
+    default_value: "skeleton"
+    description: "Prefix for TF frame names (e.g. 'skeleton' -> 'skeleton_pelvis')"
+  reference_frame:
+    type: string
+    default_value: "world"
+    description: "Root TF frame name"
+  awindaChannel:
+    type: int
+    default_value: 15
+    description: "Awinda radio channel"
+    validation:
+      bounds<>: [11, 25]
+  sampleRate:
+    type: double
+    default_value: 240.0
+    description: "XME sample rate in Hz"
+    validation:
+      bounds<>: [1.0, 240.0]
+  userCalibrationPreparationTimeMs:
+    type: int
+    default_value: 5000
+    description: "Preparation time in milliseconds before calibration starts"
+    validation:
+      bounds<>: [0, 30000]
+  suitConfiguration:
+    type: string
+    default_value: "FullBody"
+    description: "Suit configuration type"
+    validation:
+      one_of<>: [["FullBody", "UpperBody", "LowerBody"]]
+  biomechanicalModel:
+    type: string
+    default_value: "Legacy"
+    description: "Biomechanical model variant"
+    validation:
+      one_of<>: [["Legacy", "Female", "Male"]]
+  settingsPath:
+    type: string
+    default_value: ""
+    description: "Path to XME SDK settings directory"
+  userPath:
+    type: string
+    default_value: ""
+    description: "Path to XME SDK user directory (calibration files)"
+  logPath:
+    type: string
+    default_value: ""
+    description: "Path to XME SDK log directory"

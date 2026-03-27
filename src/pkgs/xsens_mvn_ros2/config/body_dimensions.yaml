@@ -1,0 +1,15 @@
+/**:
+  ros__parameters:
+    bodyDimension: # In meters
+      bodyHeight: 1.85
+      footSize: 0.31
+      shoulderHeight: 1.4434
+      shoulderWidth: 0.38
+      elbowSpan: 0.94
+      wristSpan: 1.43
+      armSpan: 1.796
+      hipHeight: 0.8744
+      hipWidth: 0.24
+      kneeHeight: 0.4861
+      ankleHeight: 0.08
+      shoeSoleHeight: 0.0

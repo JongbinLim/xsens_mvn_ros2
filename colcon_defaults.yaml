@@ -1,0 +1,31 @@
+build:
+  base-paths:
+    - src/pkgs
+    - src/deps
+  cmake-args:
+  - -DBUILD_TESTING=ON
+  - -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+  - -DCMAKE_BUILD_TYPE=Debug
+  - -DCMAKE_CXX_FLAGS=-O2 --coverage
+  - -DAMENT_CMAKE_PYTEST_WITH_COVERAGE=ON
+  - -DCMAKE_EXE_LINKER_FLAGS=-Wl,--compress-debug-sections=zlib
+  - -DCMAKE_SHARED_LINKER_FLAGS=-Wl,--compress-debug-sections=zlib
+  - --no-warn-unused-cli
+  symlink-install: true
+  packages-up-to: &packages-up-to
+    - xsens_mvn_ros2
+    - xsens_mvn_ros2_common
+    - xsens_mvn_ros2_stream
+    - xsens_mvn_ros2_xme
+    - xsens_mvn_ros2_description
+test:
+  packages-up-to: *packages-up-to
+  base-paths:
+    - src/pkgs
+    - src/deps
+  event-handlers:
+    - console_direct+
+  executor: sequential
+  retest-until-pass: 3
+list:
+  packages-up-to: *packages-up-to

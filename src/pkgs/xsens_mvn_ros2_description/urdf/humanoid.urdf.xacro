@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="humanoid">
+
+  <xacro:arg name="model_name" default="skeleton"/>
+  <xacro:property name="prefix" value="$(arg model_name)"/>
+
+  <!--
+    Each body segment is parented to its kinematic parent, forming a proper kinematic tree.
+    TF broadcasts from the Xsens nodes supply the relative transforms:
+      world → {prefix}_pelvis  (absolute root)
+      {prefix}_pelvis → {prefix}_l5  (relative)
+      …
+    tf2 composes the chain automatically so all frames remain reachable.
+  -->
+
+  <!-- World link (reference frame) -->
+  <link name="world"/>
+
+  <!--
+    Macro: one body segment + a fixed joint to its kinematic parent.
+    Parameters:
+      name   – canonical snake_case segment name (e.g. "pelvis", "left_upper_arm")
+      mesh   – PascalCase base name of the .dae file (e.g. "Pelvis", "LeftUpperArm")
+      parent – full link name of the kinematic parent (e.g. "world", "${prefix}_pelvis")
+  -->
+  <xacro:macro name="segment" params="name mesh parent">
+    <link name="${prefix}_${name}">
+      <visual>
+        <geometry>
+          <mesh filename="package://xsens_mvn_ros2_description/meshes/neutral/xsens_${mesh}.dae" scale="1 1 1"/>
+        </geometry>
+      </visual>
+    </link>
+    <joint name="${prefix}_${name}_joint" type="fixed">
+      <parent link="${parent}"/>
+      <child  link="${prefix}_${name}"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+  </xacro:macro>
+
+  <!-- Root: pelvis connects directly to world -->
+  <xacro:segment name="pelvis"           mesh="Pelvis"        parent="world"/>
+
+  <!-- Spine -->
+  <xacro:segment name="l5"              mesh="L5"            parent="${prefix}_pelvis"/>
+  <xacro:segment name="l3"              mesh="L3"            parent="${prefix}_l5"/>
+  <xacro:segment name="t12"             mesh="T12"           parent="${prefix}_l3"/>
+  <xacro:segment name="t8"              mesh="T8"            parent="${prefix}_t12"/>
+
+  <!-- Head / Neck -->
+  <xacro:segment name="neck"            mesh="Neck"          parent="${prefix}_t8"/>
+  <xacro:segment name="head"            mesh="Head"          parent="${prefix}_neck"/>
+
+  <!-- Left Arm -->
+  <xacro:segment name="left_shoulder"   mesh="LeftShoulder"  parent="${prefix}_t8"/>
+  <xacro:segment name="left_upper_arm"  mesh="LeftUpperArm"  parent="${prefix}_left_shoulder"/>
+  <xacro:segment name="left_forearm"    mesh="LeftForeArm"   parent="${prefix}_left_upper_arm"/>
+  <xacro:segment name="left_hand"       mesh="LeftHand"      parent="${prefix}_left_forearm"/>
+
+  <!-- Right Arm -->
+  <xacro:segment name="right_shoulder"  mesh="RightShoulder" parent="${prefix}_t8"/>
+  <xacro:segment name="right_upper_arm" mesh="RightUpperArm" parent="${prefix}_right_shoulder"/>
+  <xacro:segment name="right_forearm"   mesh="RightForeArm"  parent="${prefix}_right_upper_arm"/>
+  <xacro:segment name="right_hand"      mesh="RightHand"     parent="${prefix}_right_forearm"/>
+
+  <!-- Left Leg -->
+  <xacro:segment name="left_upper_leg"  mesh="LeftUpperLeg"  parent="${prefix}_pelvis"/>
+  <xacro:segment name="left_lower_leg"  mesh="LeftLowerLeg"  parent="${prefix}_left_upper_leg"/>
+  <xacro:segment name="left_foot"       mesh="LeftFoot"      parent="${prefix}_left_lower_leg"/>
+  <xacro:segment name="left_toe"        mesh="LeftToe"       parent="${prefix}_left_foot"/>
+
+  <!-- Right Leg -->
+  <xacro:segment name="right_upper_leg" mesh="RightUpperLeg" parent="${prefix}_pelvis"/>
+  <xacro:segment name="right_lower_leg" mesh="RightLowerLeg" parent="${prefix}_right_upper_leg"/>
+  <xacro:segment name="right_foot"      mesh="RightFoot"     parent="${prefix}_right_lower_leg"/>
+  <xacro:segment name="right_toe"       mesh="RightToe"      parent="${prefix}_right_foot"/>
+
+</robot>

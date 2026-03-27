@@ -1,0 +1,35 @@
+; the name of the calibration pose
+calibrationName=S:Tpose
+
+; spine
+segment1=Q:0.9984697627340179 0 0.05530038793601835 0
+segment2=Q:1 0 0 0
+segment3=Q:0.9987077007098614 0 -0.05082252003612363 0
+segment4=Q:0.9987050781810652 0 -0.05087402888854364 0
+segment5=Q:1 0 0 0
+segment6=Q:0.9939511715005132 0 0.1098228968510563 0
+segment7=Q:0.999568500071736 0 0.02937369000210807 0
+
+; right shoulder + arm
+segment8=Q:1 0 0 0
+segment9=Q:1 0 0 0
+segment10=Q:1 0 0 0
+segment11=Q:1 0 0 0
+
+; left shoulder + arm
+segment12=Q:1 0 0 0
+segment13=Q:1 0 0 0
+segment14=Q:1 0 0 0
+segment15=Q:1 0 0 0
+
+; right leg
+segment16=Q:0.9997115343780182 0 0.02401766082591783 0
+segment17=Q:0.999173864575052 0 0.04063973855914903 0
+segment18=Q:1 0 0 0
+segment19=Q:1 0 0 0
+
+; left leg
+segment20=Q:0.9997115343780182 0 0.02401766082591783 0
+segment21=Q:0.999173864575052 0 0.04063973855914903 0
+segment22=Q:1 0 0 0
+segment23=Q:1 0 0 0

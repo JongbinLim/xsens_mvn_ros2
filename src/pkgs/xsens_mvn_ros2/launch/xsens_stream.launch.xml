@@ -1,0 +1,15 @@
+<launch>
+    <arg name="discovery_range" default="LOCALHOST"/>
+    <arg name="launch_rviz" default="true"/>
+    <arg name="launch_description" default="true"/>
+    <arg name="model_name" default="skeleton"/>
+    <arg name="rviz_config_file" default="$(find-pkg-share xsens_mvn_ros2_description)/config/xsens_visualization.rviz"/>
+
+    <include file="$(find-pkg-share xsens_mvn_ros2_stream)/launch/xsens_stream.launch.xml">
+        <arg name="discovery_range" value="$(var discovery_range)"/>
+        <arg name="launch_rviz" value="$(var launch_rviz)"/>
+        <arg name="launch_description" value="$(var launch_description)"/>
+        <arg name="model_name" value="$(var model_name)"/>
+        <arg name="rviz_config_file" value="$(var rviz_config_file)"/>
+    </include>
+</launch>

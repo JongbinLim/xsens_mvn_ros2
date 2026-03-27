@@ -1,0 +1,11 @@
+xsens_urdf_publisher:
+  model_name:
+    type: string
+    default_value: "skeleton"
+    description: "Prefix for TF frame names (e.g. 'skeleton' -> 'skeleton_pelvis')"
+  republish_period:
+    type: double
+    default_value: 10.0
+    description: "Seconds between periodic URDF re-publications"
+    validation:
+      bounds<>: [0.1, 3600.0]

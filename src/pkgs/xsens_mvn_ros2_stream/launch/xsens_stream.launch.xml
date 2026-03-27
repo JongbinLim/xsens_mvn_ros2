@@ -1,0 +1,26 @@
+<launch>
+    <!-- Network isolation: restrict DDS discovery to localhost only (prevents conflicts with other users) -->
+    <arg name="discovery_range" default="LOCALHOST"/>
+    <set_env name="ROS_AUTOMATIC_DISCOVERY_RANGE" value="$(var discovery_range)"/>
+
+    <!-- RViz arguments -->
+    <arg name="launch_rviz" default="true"/>
+    <arg name="launch_description" default="true"/>
+    <arg name="model_name" default="skeleton"/>
+    <arg name="rviz_config_file" default="$(find-pkg-share xsens_mvn_ros2_description)/config/xsens_visualization.rviz"/>
+
+    <!-- Launch the node -->
+    <node pkg="xsens_mvn_ros2_stream" exec="xsens_mvn_ros2_stream_node" output="screen">
+        <param from="$(find-pkg-share xsens_mvn_ros2_stream)/config/xsens_stream_node.yaml"/>
+        <param name="model_name" value="$(var model_name)"/>
+    </node>
+
+    <!-- Launch RViz -->
+    <node if="$(var launch_rviz)" name="xsens_rviz" pkg="rviz2" exec="rviz2" output="screen" args="-d $(var rviz_config_file)"/>
+
+    <!-- Launch robot description -->
+    <include if="$(var launch_description)" file="$(find-pkg-share xsens_mvn_ros2_description)/launch/description.launch.xml">
+        <arg name="model_name" value="$(var model_name)"/>
+    </include>
+
+</launch>

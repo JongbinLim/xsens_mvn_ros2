@@ -1,0 +1,7 @@
+<launch>
+    <arg name="model_name" default="skeleton"/>
+
+    <include file="$(find-pkg-share xsens_mvn_ros2_description)/launch/description.launch.xml">
+        <arg name="model_name" value="$(var model_name)"/>
+    </include>
+</launch>
