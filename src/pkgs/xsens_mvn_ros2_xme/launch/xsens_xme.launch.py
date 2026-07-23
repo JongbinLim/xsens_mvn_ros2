@@ -27,6 +27,16 @@ def generate_launch_description():
         'auto_activate', default_value='true')
     model_name_arg = DeclareLaunchArgument(
         'model_name', default_value='skeleton')
+    settings_path_arg = DeclareLaunchArgument(
+        'settings_path',
+        default_value=FindPackageShare('xsens_xme_sdk'))
+    user_path_arg = DeclareLaunchArgument(
+        'user_path',
+        default_value=FindPackageShare('xsens_xme_sdk'))
+    log_path_arg = DeclareLaunchArgument(
+        'log_path',
+        default_value=PathJoinSubstitution([
+            EnvironmentVariable('HOME'), '.ros', 'log']))
 
     xme_node = LifecycleNode(
         package='xsens_mvn_ros2_xme',
@@ -43,10 +53,9 @@ def generate_launch_description():
                 'config', 'body_dimensions.yaml']),
             {
                 'model_name': LaunchConfiguration('model_name'),
-                'settingsPath': FindPackageShare('xsens_xme_sdk'),
-                'userPath': FindPackageShare('xsens_xme_sdk'),
-                'logPath': PathJoinSubstitution([
-                    EnvironmentVariable('HOME'), '.ros', 'log']),
+                'settingsPath': LaunchConfiguration('settings_path'),
+                'userPath': LaunchConfiguration('user_path'),
+                'logPath': LaunchConfiguration('log_path'),
             },
         ],
     )
@@ -81,6 +90,9 @@ def generate_launch_description():
         namespace_arg,
         auto_activate_arg,
         model_name_arg,
+        settings_path_arg,
+        user_path_arg,
+        log_path_arg,
         xme_node,
         activate_handler,
         configure_event,

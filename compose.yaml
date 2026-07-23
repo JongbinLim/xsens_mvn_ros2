@@ -1,0 +1,29 @@
+services:
+  xsens-jazzy:
+    # The vendored XME SDK shared libraries are Linux x86-64 binaries.
+    platform: linux/amd64
+    build:
+      context: .
+      args:
+        ROS_DISTRO: jazzy
+    image: xsens-mvn-ros2:jazzy
+    init: true
+    network_mode: host
+    ipc: host
+    environment:
+      DISPLAY: ${DISPLAY:-}
+      QT_X11_NO_MITSHM: "1"
+      ROS_DOMAIN_ID: ${ROS_DOMAIN_ID:-0}
+    volumes:
+      - /dev/bus/usb:/dev/bus/usb
+      - /run/udev:/run/udev:ro
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - xsens-user-data:/var/lib/xsens
+      - xsens-logs:/var/log/xsens
+    command: bash
+    stdin_open: true
+    tty: true
+
+volumes:
+  xsens-user-data:
+  xsens-logs:

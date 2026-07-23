@@ -163,6 +163,83 @@ ros2 pkg executables xsens_mvn_ros2_xme
 ros2 pkg executables xsens_mvn_ros2_description
 ```
 
+### Docker (ROS 2 Jazzy alongside a Humble host)
+
+The repository includes a Jazzy container configuration. It keeps the Xsens
+workspace independent from a ROS 2 Humble installation on the host while using
+host networking so DDS and MVN UDP traffic can reach the container.
+The vendored XME SDK is x86-64 only, so direct XME mode requires an amd64 Linux
+host (or emulation, which is not recommended for real-time capture).
+
+For the complete Korean walkthrough—including Docker GUI access, Sentinel
+HASP/LDK installation, XME-SDK license activation, persistent container reuse,
+hardware checks, and calibration—see
+[Docker XME setup (Korean)](docs/docker_xme_setup_ko.md).
+
+Build the image:
+
+```bash
+docker compose build xsens-jazzy
+```
+
+Open a sourced Jazzy shell:
+
+```bash
+docker compose run --rm xsens-jazzy
+```
+
+Run the MVN Studio UDP mode:
+
+```bash
+docker compose run --rm xsens-jazzy \
+  ros2 launch xsens_mvn_ros2 xsens_stream.launch.py \
+  launch_rviz:=false discovery_range:=SUBNET
+```
+
+Run the direct XME hardware mode when Sentinel licensing is provided by the
+host or a network license server:
+
+```bash
+docker compose run --rm xsens-jazzy \
+  ros2 launch xsens_mvn_ros2 xsens_xme.launch.py \
+  launch_rviz:=false discovery_range:=SUBNET \
+  user_path:=/var/lib/xsens log_path:=/var/log/xsens
+```
+
+`/var/lib/xsens` and `/var/log/xsens` are backed by named Docker volumes so
+calibration data and logs survive container removal. The Compose service also
+passes `/dev/bus/usb` and udev information into the container.
+
+Set `ROS_DOMAIN_ID` to the same value used by the host Humble project:
+
+```bash
+ROS_DOMAIN_ID=7 docker compose run --rm xsens-jazzy
+```
+
+Standard messages such as `sensor_msgs/JointState` and TF can be consumed
+directly by a Humble process when DDS discovery and the domain ID match. A
+Humble consumer of `xsens_mvn_msgs/LinkStateArray` must also build the matching
+`xsens_mvn_msgs` interface definition.
+
+For RViz, permit the local container to use the X server and omit
+`launch_rviz:=false`:
+
+```bash
+xhost +si:localuser:root
+docker compose run --rm xsens-jazzy \
+  ros2 launch xsens_mvn_ros2 xsens_xme.launch.py \
+  discovery_range:=SUBNET \
+  user_path:=/var/lib/xsens log_path:=/var/log/xsens
+```
+
+Revoke the permission afterward with `xhost -si:localuser:root`.
+
+> **XME licensing:** The vendored SDK does not include the Sentinel HASP/LDK
+> runtime or an activated XME license. The runtime may be provided by the host
+> over host networking or installed in a persistent container. Do not use an
+> ephemeral `--rm` container for container-local activation. See the linked
+> Docker XME setup guide for the procedure used in this workspace.
+
 ---
 
 ## Quick Start

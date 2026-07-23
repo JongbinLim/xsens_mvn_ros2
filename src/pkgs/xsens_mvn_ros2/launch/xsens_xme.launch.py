@@ -8,7 +8,11 @@ from launch.actions import (
 )
 from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
+from launch.substitutions import (
+    EnvironmentVariable,
+    LaunchConfiguration,
+    PathJoinSubstitution,
+)
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
@@ -26,6 +30,16 @@ def generate_launch_description():
         'launch_description', default_value='true')
     model_name_arg = DeclareLaunchArgument(
         'model_name', default_value='skeleton')
+    settings_path_arg = DeclareLaunchArgument(
+        'settings_path',
+        default_value=FindPackageShare('xsens_xme_sdk'))
+    user_path_arg = DeclareLaunchArgument(
+        'user_path',
+        default_value=FindPackageShare('xsens_xme_sdk'))
+    log_path_arg = DeclareLaunchArgument(
+        'log_path',
+        default_value=PathJoinSubstitution([
+            EnvironmentVariable('HOME'), '.ros', 'log']))
     rviz_config_arg = DeclareLaunchArgument(
         'rviz_config_file',
         default_value=PathJoinSubstitution([
@@ -45,6 +59,9 @@ def generate_launch_description():
             'namespace': LaunchConfiguration('namespace'),
             'auto_activate': LaunchConfiguration('auto_activate'),
             'model_name': LaunchConfiguration('model_name'),
+            'settings_path': LaunchConfiguration('settings_path'),
+            'user_path': LaunchConfiguration('user_path'),
+            'log_path': LaunchConfiguration('log_path'),
         }.items(),
     )
 
@@ -77,6 +94,9 @@ def generate_launch_description():
         launch_rviz_arg,
         launch_description_arg,
         model_name_arg,
+        settings_path_arg,
+        user_path_arg,
+        log_path_arg,
         rviz_config_arg,
         set_discovery,
         xme_launch,
